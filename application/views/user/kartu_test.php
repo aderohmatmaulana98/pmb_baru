@@ -27,12 +27,13 @@
 </head>
 
 <body class="col-lg-7">
+<?php if ($kartu_test['jalur_pendaftaran'] == 'Reguler' || $kartu_test['jalur_pendaftaran'] == 'PKL') { ?>
     <div class="mt-4 ">
-        <table class="tepi" width="600px">
+        <table class="tepi" width="900px">
             <tr>
                 <td width="1">
                     <div class="mx-3">
-                        <img src="<?= base_url('assets/landing/assets/img/akn/logo_akn.png'); ?>" height="75px" width="80px" alt="">
+                        <img src="<?= base_url('assets/landing/assets/img/akn/logo_akn.png'); ?>" height="130px" width="120px" alt="">
                     </div>
                 </td>
                 <td>
@@ -48,7 +49,7 @@
 
 
         </table>
-        <table border="2" class="tepi" width="600px">
+        <table border="2" class="tepi" width="900px">
             <tr>
                 <td>
                     <div style="text-align: left;" class="ml-3">
@@ -62,8 +63,8 @@
                                     <td style="font-size: 9pt; border: 0px;"><b>No pendaftaran</b></td>
                                     <td style="font-size: 9pt; border: 0px;">:</td>
                                     <td style="font-size: 9pt; border: 0px;"><?= $kartu_test['no_pendaftaran']; ?></td>
-                                    <td rowspan="4" width="110px" align="right">
-                                        <img src="<?= base_url('assets/img/pas_foto/') . $kartu_test['pas_foto']; ?>" class="border border-dark" height="90px" width="70px">
+                                    <td rowspan="4" width="350px" align="right">
+                                        <img src="<?= base_url('assets/img/pas_foto/') . $kartu_test['pas_foto']; ?>" class="border border-dark" height="100px" width="80px">
                                     </td>
                                     <td rowspan="5" style="padding-left: 10px;">
                                         <img src="<?= base_url('assets/img/qr_code/') . $kartu_test['no_pendaftaran'] . '.png'; ?>" class="border border-dark" align="right" height="170px" width="170px">
@@ -106,7 +107,7 @@
                 </td>
             </tr>
         </table>
-        <table border="2" class="tepi" style="border-top: 0px;" width="600px">
+        <table border="2" class="tepi" style="border-top: 0px;" width="900px">
             <tr>
                 <td>
                     <div style="text-align: left;" class="ml-4">
@@ -228,7 +229,7 @@
                 </td>
             </tr>
         </table>
-        <table border="2" class="tepi" width="600px" style="border-top: 0px;">
+        <table border="2" class="tepi" width="900px" style="border-top: 0px;">
             <tr>
                 <td>
                     <div style="text-align: left;" class="col-md-15 ml-3">
@@ -249,6 +250,9 @@
                                 <li style="font-size: 9pt;">
                                     Peserta diwajibkan membawa kartu test
                                 </li>
+                                <li style="font-size: 9pt;">
+                                    Membawa alat tulis
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -256,6 +260,10 @@
             </tr>
         </table>
     </div>
+<?php } else { ?>
+
+<?php } ?>
+   
     <div style="page-break-after: always;"></div>
     <div class="container-lg mt-4">
         <div class="row">
