@@ -957,11 +957,14 @@ class Admin extends CI_Controller
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         // $this->load->library('dompdf_gen');
-        $sql = "SELECT pendaftar.`no_pendaftaran`, pendaftar.`nama_lengkap`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, pendaftar.`jenis_kelamin`, prodi.nama_prodi, prodi.ruangan_praktek, prodi.ruangan_wawancara, jadwal.`tgl_test`, pendaftar.pas_foto, th_ajaran.tahun_ajaran,jadwal.gelombang
-        FROM user, pendaftar, jadwal, prodi, th_ajaran
+        $sql = "SELECT pendaftar.`no_pendaftaran`, pendaftar.`nama_lengkap`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, 
+        pendaftar.`jenis_kelamin`, prodi.nama_prodi, prodi2.nama_prodi as nama_prodi2, prodi.ruangan_praktek, prodi.ruangan_wawancara,
+        jadwal.`tgl_test`,  jadwal.`tgl_test2`, jadwal.test_tulis, pendaftar.pas_foto, th_ajaran.tahun_ajaran,jadwal.gelombang
+        FROM user, pendaftar, jadwal, prodi, th_ajaran, prodi as prodi2
         WHERE user.`id` = pendaftar.`id_user_calon_mhs`
         AND jadwal.`id` = pendaftar.`id_jadwal`
         AND prodi.id = pendaftar.`id_prodi`
+        AND prodi2.id = pendaftar.`id_prodi2`
         AND th_ajaran.id = pendaftar.id_th_ajaran
         AND user.`id` = $id_user";
         $data['kartu_test'] = $this->db->query($sql)->row_array();
