@@ -36,12 +36,12 @@
                                     <td><?= $po['tahun_ajaran'] ?></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#exampleModal1">
+                                            data-bs-target="#exampleModal1<?= $po['id'] ?>">
                                             Lihat
                                         </button>
 
                                         <!-- Modal -->
-                                        <div class="modal fade" id="exampleModal1" tabindex="-1"
+                                        <div class="modal fade" id="exampleModal1<?= $po['id'] ?>" tabindex="-1"
                                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog modal-xl">
                                                 <div class="modal-content">

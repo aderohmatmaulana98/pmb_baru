@@ -37,7 +37,7 @@
                     <div class="mb-3">
                         <label for="jalur_seleksi" class="form-label">Jalur Seleksi</label>
                         <input type="text" class="form-control" id="jalur_seleksi" name="jalur_seleksi"
-                            value="AKNSBY (Kemitraan Pemprov DIY)" required>
+                            value="<?= $detail_form['jalur_seleksi']; ?>" required>
                     </div>
                     <div class="mb-3">
                         <label for="jalur_seleksi" class="form-label">Prodi Pilihan 1</label>
@@ -365,7 +365,34 @@
                             <td><?= $dp['jenis_kegiatan_lomba']; ?></td>
                             <td><?= $dp['tingkat_kejuaraan']; ?></td>
                             <td><?= $dp['prestasi_juara_ke']; ?></td>
-                            <td><a href="<?= base_url('assets/img/bukti_sertifikat/'.$dp['bukti']); ?>">Lihat Disini</a>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1<?= $dp['id'] ?>">
+                                    Lihat
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal1<?= $dp['id'] ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Bukti Sertifikat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body mx-auto">
+                                                <iframe
+                                                    src="<?= base_url('assets/img/bukti_sertifikat/') . $dp['bukti']; ?>"
+                                                    width="800" height="600"></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </td>
                             <td>
                                 <span class="badge bg-success"><a href="" data-bs-toggle="modal"

@@ -30,7 +30,7 @@
                     <div class="mb-3">
                         <label for="jalur_seleksi" class="form-label">Jalur Seleksi</label>
                         <input type="text" class="form-control" id="jalur_seleksi" name="jalur_seleksi"
-                            value="AKNSBY (Kemitraan Pemprov DIY)" readonly required>
+                            value="<?= $detail_form['jalur_seleksi']; ?>" readonly required>
                     </div>
                     <div class="mb-3">
                         <label for="jalur_seleksi" class="form-label">Prodi Pilihan 1</label>
@@ -347,6 +347,7 @@
                             <th scope="col">Jenis Kegiatan Lomba</th>
                             <th scope="col">Tingkat Kejuaraan</th>
                             <th scope="col">Prestasi Juara Ke</th>
+                            <th scope="col">Bukti</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -357,6 +358,35 @@
                             <td><?= $dp['jenis_kegiatan_lomba']; ?></td>
                             <td><?= $dp['tingkat_kejuaraan']; ?></td>
                             <td><?= $dp['prestasi_juara_ke']; ?></td>
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#exampleModal1<?= $dp['id'] ?>">
+                                    Lihat
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="exampleModal1<?= $dp['id'] ?>" tabindex="-1"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-xl">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Bukti Sertifikat</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                    aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body mx-auto">
+                                                <iframe
+                                                    src="<?= base_url('assets/img/bukti_sertifikat/') . $dp['bukti']; ?>"
+                                                    width="800" height="600"></iframe>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-bs-dismiss="modal">Close</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
                         </tr>
                         <?php $i++;
                         endforeach; ?>
@@ -536,63 +566,63 @@
 <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
     crossorigin="anonymous"></script>
 <script>
-    $(document).ready(function () {
-        $('#judul_biodata').click(function () {
-            $("#judul_biodata").removeClass("bg-primary");
-            $("#judul_biodata").addClass("col-md-3 bg-info btn");
-            $("#judul_sekolah_asal").removeClass("bg-info");
-            $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
-            $("#judul_prestasi").removeClass("bg-info");
-            $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
-            $("#judul_data_orang_tua").removeClass("bg-info");
-            $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
-            $("#biodata").removeClass("visually-hidden");
-            $("#data_sekolah").addClass("visually-hidden");
-            $("#data_prestasi").addClass("visually-hidden");
-            $("#data_ortu").addClass("visually-hidden");
+$(document).ready(function() {
+    $('#judul_biodata').click(function() {
+        $("#judul_biodata").removeClass("bg-primary");
+        $("#judul_biodata").addClass("col-md-3 bg-info btn");
+        $("#judul_sekolah_asal").removeClass("bg-info");
+        $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
+        $("#judul_prestasi").removeClass("bg-info");
+        $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
+        $("#judul_data_orang_tua").removeClass("bg-info");
+        $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
+        $("#biodata").removeClass("visually-hidden");
+        $("#data_sekolah").addClass("visually-hidden");
+        $("#data_prestasi").addClass("visually-hidden");
+        $("#data_ortu").addClass("visually-hidden");
 
-        });
-        $('#judul_sekolah_asal').click(function () {
-            $("#judul_biodata").removeClass("bg-info");
-            $("#judul_biodata").addClass("col-md-3 bg-primary btn");
-            $("#judul_prestasi").removeClass("bg-info");
-            $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
-            $("#judul_sekolah_asal").removeClass("bg-primary");
-            $("#judul_sekolah_asal").addClass("col-md-3 bg-info btn");
-            $("#judul_data_orang_tua").removeClass("bg-info");
-            $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
-            $("#biodata").addClass("visually-hidden");
-            $("#data_sekolah").removeClass("visually-hidden");
-            $("#data_prestasi").addClass("visually-hidden");
-            $("#data_ortu").addClass("visually-hidden");
-        });
-        $('#judul_prestasi').click(function () {
-            $("#judul_biodata").removeClass("bg-info");
-            $("#judul_biodata").addClass("col-md-3 bg-primary btn");
-            $("#judul_sekolah_asal").removeClass("bg-info");
-            $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
-            $("#judul_prestasi").removeClass("bg-primary");
-            $("#judul_prestasi").addClass("col-md-3 bg-info btn");
-            $("#judul_data_orang_tua").removeClass("bg-info");
-            $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
-            $("#biodata").addClass("visually-hidden");
-            $("#data_sekolah").addClass("visually-hidden");
-            $("#data_prestasi").removeClass("visually-hidden");
-            $("#data_ortu").addClass("visually-hidden");
-        });
-        $('#judul_data_orang_tua').click(function () {
-            $("#judul_biodata").removeClass("bg-info");
-            $("#judul_biodata").addClass("col-md-3 bg-primary btn");
-            $("#judul_data_orang_tua").removeClass("bg-primary");
-            $("#judul_data_orang_tua").addClass("col-md-3 bg-info btn");
-            $("#judul_sekolah_asal").removeClass("bg-info");
-            $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
-            $("#judul_prestasi").removeClass("bg-info");
-            $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
-            $("#biodata").addClass("visually-hidden");
-            $("#data_sekolah").addClass("visually-hidden");
-            $("#data_prestasi").addClass("visually-hidden");
-            $("#data_ortu").removeClass("visually-hidden");
-        });
     });
+    $('#judul_sekolah_asal').click(function() {
+        $("#judul_biodata").removeClass("bg-info");
+        $("#judul_biodata").addClass("col-md-3 bg-primary btn");
+        $("#judul_prestasi").removeClass("bg-info");
+        $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
+        $("#judul_sekolah_asal").removeClass("bg-primary");
+        $("#judul_sekolah_asal").addClass("col-md-3 bg-info btn");
+        $("#judul_data_orang_tua").removeClass("bg-info");
+        $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
+        $("#biodata").addClass("visually-hidden");
+        $("#data_sekolah").removeClass("visually-hidden");
+        $("#data_prestasi").addClass("visually-hidden");
+        $("#data_ortu").addClass("visually-hidden");
+    });
+    $('#judul_prestasi').click(function() {
+        $("#judul_biodata").removeClass("bg-info");
+        $("#judul_biodata").addClass("col-md-3 bg-primary btn");
+        $("#judul_sekolah_asal").removeClass("bg-info");
+        $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
+        $("#judul_prestasi").removeClass("bg-primary");
+        $("#judul_prestasi").addClass("col-md-3 bg-info btn");
+        $("#judul_data_orang_tua").removeClass("bg-info");
+        $("#judul_data_orang_tua").addClass("col-md-3 bg-primary btn");
+        $("#biodata").addClass("visually-hidden");
+        $("#data_sekolah").addClass("visually-hidden");
+        $("#data_prestasi").removeClass("visually-hidden");
+        $("#data_ortu").addClass("visually-hidden");
+    });
+    $('#judul_data_orang_tua').click(function() {
+        $("#judul_biodata").removeClass("bg-info");
+        $("#judul_biodata").addClass("col-md-3 bg-primary btn");
+        $("#judul_data_orang_tua").removeClass("bg-primary");
+        $("#judul_data_orang_tua").addClass("col-md-3 bg-info btn");
+        $("#judul_sekolah_asal").removeClass("bg-info");
+        $("#judul_sekolah_asal").addClass("col-md-3 bg-primary btn");
+        $("#judul_prestasi").removeClass("bg-info");
+        $("#judul_prestasi").addClass("col-md-3 bg-primary btn");
+        $("#biodata").addClass("visually-hidden");
+        $("#data_sekolah").addClass("visually-hidden");
+        $("#data_prestasi").addClass("visually-hidden");
+        $("#data_ortu").removeClass("visually-hidden");
+    });
+});
 </script>

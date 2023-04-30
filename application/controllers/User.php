@@ -938,7 +938,7 @@ class User extends CI_Controller
         $sql2 = "SELECT DISTINCT(sekolah.status) FROM sekolah";
         $data['status_sekolah'] = $this->db->query($sql2)->result_array();
 
-        $sql3 = "SELECT data_prestasi.`id`,user.nik, data_prestasi.`jenis_kegiatan_lomba`, data_prestasi.`tingkat_kejuaraan`, data_prestasi.`prestasi_juara_ke`
+        $sql3 = "SELECT data_prestasi.`id`,data_prestasi.`bukti`,user.nik, data_prestasi.`jenis_kegiatan_lomba`, data_prestasi.`tingkat_kejuaraan`, data_prestasi.`prestasi_juara_ke`
         FROM data_prestasi, user
         WHERE data_prestasi.`id_user_calon_mhs` = user.`id`
         AND user.id = $id";
@@ -982,7 +982,7 @@ class User extends CI_Controller
             # code...
         } else {
             $config['upload_path'] = './assets/img/bukti_bayar';
-            $config['allowed_types'] = 'pdf';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);

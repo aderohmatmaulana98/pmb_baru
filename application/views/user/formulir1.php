@@ -77,7 +77,7 @@
                                     <label for="jalur_seleksi" class="form-label">Jalur Seleksi <span
                                             class="text-danger" style="font-size: 20px;">*</span></label>
                                     <input type="text" class="form-control" id="jalur_seleksi" name="jalur_seleksi"
-                                        value="AKNSBY (Kemitraan Pemprov DIY)" readonly required>
+                                        value="<?= $user['jalur_pendaftaran'] ?>" readonly required>
                                 </div>
                                 <div class="mb-3">
                                     <label for="jalur_seleksi" class="form-label">Prodi Pilihan 1 <span
