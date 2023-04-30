@@ -154,7 +154,7 @@ class User extends CI_Controller
 
         $sql = "SELECT pendaftar.`no_pendaftaran`, pendaftar.`nama_lengkap`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, 
         pendaftar.`jenis_kelamin`, prodi.nama_prodi, prodi2.nama_prodi as nama_prodi2, prodi.ruangan_praktek, prodi.ruangan_wawancara,
-        jadwal.`tgl_test`,  jadwal.`tgl_test2`, jadwal.test_tulis, pendaftar.pas_foto, th_ajaran.tahun_ajaran,jadwal.gelombang
+        jadwal.`tgl_test`,  jadwal.`tgl_test2`, jadwal.test_tulis, pendaftar.pas_foto, th_ajaran.tahun_ajaran,jadwal.gelombang, user.jalur_pendaftaran
         FROM user, pendaftar, jadwal, prodi, th_ajaran, prodi as prodi2
         WHERE user.`id` = pendaftar.`id_user_calon_mhs`
         AND jadwal.`id` = pendaftar.`id_jadwal`
@@ -330,7 +330,7 @@ class User extends CI_Controller
             # code...
         } else {
             $config['upload_path'] = './assets/img/ktp';
-            $config['allowed_types'] = 'pdf';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -348,7 +348,7 @@ class User extends CI_Controller
             # code...
         } else {
             $config['upload_path'] = './assets/img/ijazah';
-            $config['allowed_types'] = 'pdf';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -366,7 +366,7 @@ class User extends CI_Controller
             # code...
         } else {
             $config['upload_path'] = './assets/img/akte';
-            $config['allowed_types'] = 'pdf';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -384,7 +384,7 @@ class User extends CI_Controller
             # code...
         } else {
             $config['upload_path'] = './assets/img/rapot';
-            $config['allowed_types'] = 'pdf';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|gif';
 
             $this->load->library('upload', $config);
             $this->upload->initialize($config);
@@ -395,6 +395,8 @@ class User extends CI_Controller
                 $rapot = $this->upload->data('file_name');
             }
         }
+
+
         $id_user_calon_mhs = $data['user']['id'];
 
         $sql7 = "SELECT th_ajaran.`id` FROM th_ajaran WHERE th_ajaran.`is_active` = 1";
@@ -404,7 +406,7 @@ class User extends CI_Controller
         $gelombang = $this->db->query("SELECT `th_ajaran`.`id` 
         FROM `th_ajaran`
         WHERE th_ajaran.`is_active` = 1")->row_array();
-        $gelombang = $tahun_ajaran['id'];
+        $gelombang = $gelombang['id'];
 
         $data = [
             'no_pendaftaran' => $no_daftar,
@@ -439,6 +441,7 @@ class User extends CI_Controller
             'status_finalisasi' => 0,
             'status_validasi_berkas' => 0
         ];
+
         $this->db->set($data);
         $this->db->insert('pendaftar');
         $sql3 = "SELECT pendaftar.date_created 

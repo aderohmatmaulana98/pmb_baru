@@ -235,13 +235,12 @@
                                             style="font-size: 20px;">*</span></label>
                                     <input class="form-control" type="file" id="ktp" name="ktp" required>
                                     <small>Upload file dengan format PDF
-                                    </small>
                                 </div>
                                 <div class="mb-3">
-                                    <label for="formFile" class="form-label">Upload Ijazah / SKL / SKHUN <span class="text-danger"
+                                    <label for="formFile" class="form-label">Upload Ijazah <span class="text-danger"
                                             style="font-size: 20px;">*</span></label>
                                     <input class="form-control" type="file" id="ijazah" name="ijazah" required>
-                                    <small>Upload file dengan format PDF</small>
+                                    <small>Upload file dengan format PDF
                                 </div>
                                 <div class="mb-3">
                                     <label for="formFile" class="form-label">Upload Akta Lahir <span class="text-danger"
