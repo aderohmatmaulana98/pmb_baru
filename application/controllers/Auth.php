@@ -112,14 +112,27 @@ class Auth extends CI_Controller
             $jalur_pendaftaran = $this->input->post('jalur_pendaftaran', true);
             $no_pendaftaran = $this->db->query("SELECT MAX(user.`no_va`) as no_pembayaran FROM user")->row_array();
             $no_pendaftaran = $no_pendaftaran['no_pembayaran'];
-            $urutan = (int)substr($no_pendaftaran, 16, 3);
-            $urutan++;
+            
+            $urutan2 = substr($no_pendaftaran, -3);
+           
+            // $urutan = (int)substr($no_pendaftaran, 16, 3);
+            $urutan2++;                        
 
             $no_biller = '89064';
             $npsn = '006005';
             $tahun = '23';
 
-            $kode_va = $no_biller . $npsn . $tahun . sprintf('%' . '03s', $urutan);
+            $kode_va = $no_biller . $npsn . $tahun . sprintf('%' . '03s', $urutan2);
+           
+            $cek_va = $this->db->query("SELECT count(user.no_va) AS jumlah FROM user WHERE user.no_va = $kode_va")->row_array();
+            $cek_va = $cek_va['jumlah'];
+            if ($cek_va > 0) {
+                $this->session->set_flashdata('message', '<div class="alert alert-danger" role="alert">
+			Gagal membuat akun silahkan coba lagi
+		  </div>');
+            redirect('auth');
+            }
+
 
             if ($jalur_pendaftaran == 'Reguler') {
                 $data = [

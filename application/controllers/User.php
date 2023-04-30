@@ -285,12 +285,14 @@ class User extends CI_Controller
         $nama_lengkap = $this->input->post('nama_lengkap');
         $jalur_seleksi = $this->input->post('jalur_seleksi');
         $prodi = $this->input->post('prodi');
+        $prodi2 = $this->input->post('prodi2');
         $tempat_lahir = $this->input->post('tempat_lahir');
         $tgl_lahir = $this->input->post('tgl_lahir');
         $provinsi_tempat_lahir = $this->input->post('provinsi_tempat_lahir');
         $jenis_kelamin = $this->input->post('jenis_kelamin');
         $status_pernikahan = $this->input->post('status_pernikahan');
         $agama = $this->input->post('agama');
+        $nisn = $this->input->post('nisn');
         $no_hp = $this->input->post('no_hp');
         $email = $data['user']['email'];
         $alamat = $this->input->post('alamat_lengkap');
@@ -323,6 +325,11 @@ class User extends CI_Controller
         $tahun_ajaran = $this->db->query($sql7)->row_array();
         $tahun_ajaran = $tahun_ajaran['id'];
 
+        $gelombang = $this->db->query("SELECT `th_ajaran`.`id` 
+        FROM `th_ajaran`
+        WHERE th_ajaran.`is_active` = 1")->row_array();
+        $gelombang = $tahun_ajaran['id'];
+
         $data = [
             'no_pendaftaran' => $no_daftar,
             'nama_lengkap' => $nama_lengkap,
@@ -331,6 +338,7 @@ class User extends CI_Controller
             'tanggal_lahir' => $tgl_lahir,
             'provinsi_tempat_lahir' => $provinsi_tempat_lahir,
             'agama' => $agama,
+            'nisn' => $nisn,
             'jenis_kelamin' => $jenis_kelamin,
             'alamat' => $alamat,
             'telepon' => $no_hp,
@@ -338,12 +346,13 @@ class User extends CI_Controller
             'kode_pos' => $kodepos,
             'kewarganegaraan' => $kewarganegaraan,
             'id_prodi' => $prodi,
+            'id_prodi2' => $prodi2,
             'id_provinsi' => $provinsi_tinggal,
             'id_kabupaten' => $kabupaten,
             'id_kecamatan' => $kecamatan,
             'id_th_ajaran' => $tahun_ajaran,
             'id_pengumuman' => NULL,
-            'id_jadwal' => 2,
+            'id_jadwal' => $gelombang,
             'date_created' => date("Y-m-d"),
             'id_user_calon_mhs' => $id_user_calon_mhs,
             'pas_foto' => $pas_foto,
@@ -474,12 +483,33 @@ class User extends CI_Controller
         $prestasi_juara_ke = $this->input->post('prestasi_juara_ke');
         $id_user_calon_mhs = $data['user']['id'];
 
+        
+        $bukti = $_FILES['bukti'];
+
+        if ($bukti = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/bukti_sertifikat';
+            $config['allowed_types'] = 'pdf|png|jpg|jpeg|PNG';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('bukti')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $bukti = $this->upload->data('file_name');
+            }
+        }
+
         $data = [
             'jenis_kegiatan_lomba' => $jenis_kegiatan_lomba,
             'tingkat_kejuaraan' => $tingkat_kejuaraan,
             'prestasi_juara_ke' => $prestasi_juara_ke,
+            'bukti' => $bukti,
             'id_user_calon_mhs' => $id_user_calon_mhs
         ];
+
         $this->db->insert('data_prestasi', $data);
 
         $this->session->set_flashdata('message', '<div class="alert alert-success" role="alert"> Data prestasi berhasil disimpan. </div>');
@@ -858,6 +888,18 @@ class User extends CI_Controller
 
         $data['pengumuman'] = $this->db->query($sql)->row_array();
 
+        $data['gelombang'] = $this->db->query("SELECT pendaftar.id_jadwal FROM user, pendaftar WHERE pendaftar.id_user_calon_mhs = user.id AND user.id = $user_id")->row_array();
+
+        $gelombang = $data['gelombang']['id_jadwal'];
+        
+        $data['pengumuman_manual'] = $this->db->query("SELECT pengumuman_manual.id, jadwal.gelombang, pengumuman_manual.file_pengumuman 
+        FROM pengumuman_manual, jadwal WHERE pengumuman_manual.id_jadwal = jadwal.id AND jadwal.id = $gelombang")->result_array();
+        
+        $data['cek_pengumuman_manual'] = $this->db->query("SELECT count(pengumuman_manual.id)
+        FROM pengumuman_manual, jadwal WHERE pengumuman_manual.id_jadwal = jadwal.id AND jadwal.id = $gelombang")->result_array();
+   
+
+
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
         $this->load->view('template/topbar', $data);
@@ -869,10 +911,11 @@ class User extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Detail Formulir';
 
-        $sql = "SELECT pendaftar.`nama_lengkap`, pendaftar.`jalur_seleksi`, prodi.`nama_prodi`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, pendaftar.`provinsi_tempat_lahir`, user.`nik`, pendaftar.`jenis_kelamin`, pendaftar.`status_pernikahan`, pendaftar.`agama`, pendaftar.`telepon`, user.`email`, pendaftar.`alamat`, provinsi.`nama_provinsi`, kabupaten.`kabupaten`, kecamatan.`nama_kecamatan`, pendaftar.`kode_pos`, pendaftar.`kewarganegaraan`, pendaftar.`pas_foto`
+        $sql = "SELECT pendaftar.`nama_lengkap`,pendaftar.`nisn`, pendaftar.`jalur_seleksi`, prodi.`nama_prodi`, pendaftar.`id_prodi2`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, pendaftar.`provinsi_tempat_lahir`, user.`nik`, pendaftar.`jenis_kelamin`, pendaftar.`status_pernikahan`, pendaftar.`agama`, pendaftar.`telepon`, user.`email`, pendaftar.`alamat`, provinsi.`nama_provinsi`, kabupaten.`kabupaten`, kecamatan.`nama_kecamatan`, pendaftar.`kode_pos`, pendaftar.`kewarganegaraan`, pendaftar.`pas_foto`
         FROM user 
         INNER JOIN pendaftar ON user.id = pendaftar.`id_user_calon_mhs`
         INNER JOIN prodi ON prodi.`id` = pendaftar.`id_prodi`
+        INNER JOIN prodi as prodi2 ON prodi2.`id` = pendaftar.`id_prodi2`
         INNER JOIN provinsi ON pendaftar.`id_provinsi` = provinsi.`id`
         INNER JOIN kabupaten ON kabupaten.`id` = pendaftar.`id_kabupaten`
         INNER JOIN kecamatan ON kecamatan.`id` = pendaftar.`id_kecamatan`

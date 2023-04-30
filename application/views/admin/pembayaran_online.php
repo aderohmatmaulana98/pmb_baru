@@ -80,9 +80,13 @@
                                             href="<?= base_url("admin/batalkan_konfirmasi_pembayaran_online/") . $po['id']  ?>"><span
                                                 class="badge bg-danger">Batalkan</span></a>
                                         <?php endif; ?>
+
                                         <a href="<?= base_url("admin/hapus_pembayaran_online/") . $po['id'] . '/' . $po['user_id'] ?>"
                                             onclick="javascript: return confirm('Anda yakin akan menghapus ini? ')"><span
                                                 class="badge bg-danger">Hapus</span></a>
+
+                                        <a href="<?= base_url("admin/cetak_bukti_pembayaran/") . $po['id'] ?>"><span
+                                                class="badge bg-primary">Cetak</span></a>
                                     </td>
                                 </tr>
                                 <?php $i++;

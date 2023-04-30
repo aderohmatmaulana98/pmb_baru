@@ -4,59 +4,52 @@
     </div>
     <section class="section mt-4">
         <div class="row mb-2">
-            <div class="my-4" align="center">
-               <?php if($pengumuman['id_pengumuman']==1) : ?>
-                <div class="col-lg-7">
-                    <div class="col-lg-2 mb-3">
-                        <img src="<?= base_url('assets/admin_panel/assets/images/icon/lulus.png'); ?>" width="200" height="200" alt="Lulus">
-                    </div>
-                    <div>
-                        <h2>SELAMAT, ATAS NAMA <b><?= strtoupper($pengumuman['nama_lengkap']) ?></b> DENGAN NIK <b><?= strtoupper($pengumuman['nik']) ?></b> , DITERIMA DI PRODI <b><?= strtoupper($pengumuman['nama_prodi']) ?></b> AKADEMI KOMUNITAS NEGERI SENI DAN BUDAYA YOGYAKARTA</h2>
-                    </div>
+            <div class="my-4">
+                <?php if($cek_pengumuman_manual == 0) : ?>
+                <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                    Belum Ada Pengumuman
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                <?php elseif($pengumuman['id_pengumuman']==2) : ?>
-                <div class="col-lg-7">
-                    <div class="mb-3">
-                        <img src="<?= base_url('assets/admin_panel/assets/images/icon/gagal.png'); ?>" width="200" height="200" alt="Lulus">
-                    </div>
-                    <div>
-                        <h2>MOHON MAAF, PESERTA ATAS NAMA <b><?= strtoupper($pengumuman['nama_lengkap']) ?></b> DENGAN NIK <b><?= strtoupper($pengumuman['nik']) ?></b> DINYATAKAN TIDAK DITERIMA.<br> <br> JANGAN PUTUS ASA DAN TETAP SEMANGAT</h2>
-                    </div>
-                    
+                <?php else : ?>
+                <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                    Pengumuman Sudah Terbit
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                
-                <!-- <div class="card shadow mt-5 col-lg-7">
-                    <table class="table table-hover">
-                        <tr>
-                            <th>Nilai Praktek</th>
-                            <th>Nilai Wawancara</th>
-                            <th>Skor</th>
-                        </tr>
-                        <tr>
-                            <td><?= $pengumuman['praktek'] ?></td>
-                            <td><?= $pengumuman['wawancara'] ?></td>
-                            <td><?= $pengumuman['skor'] ?></td>
-                        </tr>
-                    </table>
-                </div> -->
-            </div>
-            <?php else : ?>
-            <div class="col-lg-7">
-                    <div>
-                    <div class="img-responsive">
-                        <img src="<?= base_url('assets/admin_panel/assets/images/icon/announ.svg'); ?>" width="500" height="500" alt="Lulus">
+                <?php endif; ?>
 
-                    </div>
-                    <h2>PENGUMUMAN SUDAH TERBIT</h2>
-                    <h5>Selamat Kepada calon mahasiswa bagi yang lolos seleksi gelombang II nama-nama nya terlampir pada file berikut.</h5>
-                    <h5>Bagi yang belum lolos jangan bersedih, jangan putus asa dan tetap semangat serta tingkatkan kompetensi.</h5>
-                    <h5>Silahkan klik tombol dibawah Untuk melihat daftar mahasiswa diterima</h5>
-                    <div class="text-center">
-                        <a class="btn btn-outline-success" href="https://s.id/1cWYX">Lihat Pengumuman</a>
+                <div class="card">
+                    <div class="card-body">
+                        <div class="mb-4">
+                        </div>
+                        <table class='table table-striped' id="example">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Gelombang</th>
+                                    <th>Download Pengumuman</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1;
+                            foreach ($pengumuman_manual as $p) :
+                            ?>
+                                <tr>
+                                    <td><?= $i; ?></td>
+                                    <td><?= $p['gelombang'] ?></td>
+                                    <td><a href="<?= base_url('assets/img/pengumuman/'.$p['file_pengumuman']) ?>">Download
+                                            Disini</a>
+                                    </td>
+
+                                </tr>
+                                <?php $i++;
+                            endforeach;
+                            ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+
             </div>
-            <?php endif; ?>
         </div>
     </section>
 </div>
