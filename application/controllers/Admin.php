@@ -657,21 +657,22 @@ class Admin extends CI_Controller
         $data['title'] = 'Data Belum Finalisasi';
         $data['judul'] = 'Detail Formulir';
 
-        $sql = "SELECT user.id as id_user, pendaftar.id,pendaftar.`nama_lengkap`, pendaftar.`jalur_seleksi`, prodi.`nama_prodi`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, pendaftar.`provinsi_tempat_lahir`, user.`nik`, pendaftar.`jenis_kelamin`, pendaftar.`status_pernikahan`, pendaftar.`agama`, pendaftar.`telepon`, user.`email`, pendaftar.`alamat`, provinsi.`nama_provinsi`, kabupaten.`kabupaten`, kecamatan.`nama_kecamatan`, pendaftar.`kode_pos`, pendaftar.`kewarganegaraan`, pendaftar.`pas_foto`, pendaftar.status_finalisasi, pendaftar.status_validasi_berkas, pendaftar.id_pengumuman
+        $sql = "SELECT user.id as id_user, pendaftar.id,pendaftar.`nama_lengkap`, pendaftar.`jalur_seleksi`, prodi.`nama_prodi`, pendaftar.`id_prodi2`, pendaftar.`tempat_lahir`, pendaftar.`tanggal_lahir`, pendaftar.`provinsi_tempat_lahir`, user.`nik`, pendaftar.`jenis_kelamin`, pendaftar.`status_pernikahan`, pendaftar.`agama`, pendaftar.`telepon`, user.`email`, pendaftar.`alamat`, provinsi.`nama_provinsi`, kabupaten.`kabupaten`, kecamatan.`nama_kecamatan`, pendaftar.`kode_pos`, pendaftar.`kewarganegaraan`, pendaftar.`pas_foto`, pendaftar.status_finalisasi, pendaftar.status_validasi_berkas, pendaftar.id_pengumuman
         FROM user 
         INNER JOIN pendaftar ON user.id = pendaftar.`id_user_calon_mhs`
         INNER JOIN prodi ON prodi.`id` = pendaftar.`id_prodi`
+        INNER JOIN prodi as prodi2 ON prodi2.`id` = pendaftar.`id_prodi2`
         INNER JOIN provinsi ON pendaftar.`id_provinsi` = provinsi.`id`
         INNER JOIN kabupaten ON kabupaten.`id` = pendaftar.`id_kabupaten`
         INNER JOIN kecamatan ON kecamatan.`id` = pendaftar.`id_kecamatan`
-        WHERE user.nik = $id";
+        WHERE user.id = $id";
         $data['detail_form'] = $this->db->query($sql)->row_array();
 
         $sql1 = "SELECT user.id,detail_sekolah.`nama_sekolah`, detail_sekolah.`jenis_sekolah`, detail_sekolah.`id_provinsi`, detail_sekolah.`alamat_lengkap_sekolah`, detail_sekolah.`jurusan`, detail_sekolah.`status_kelulusan`, detail_sekolah.`tahun_lulus`, detail_sekolah.`no_ijazah`, detail_sekolah.`tgl_ijazah`,detail_sekolah.`bhs_indo_smt3`, detail_sekolah.`bhs_inggris_smt3`, detail_sekolah.`matematika_smt3`,detail_sekolah.`bhs_indo_smt4`, detail_sekolah.`bhs_inggris_smt4`, detail_sekolah.`matematika_smt4`,detail_sekolah.`bhs_indo_smt5`, detail_sekolah.`bhs_inggris_smt5`, detail_sekolah.`matematika_smt5`, detail_sekolah.`bhs_indonesia`, detail_sekolah.`bhs_inggris`, detail_sekolah.`matematika`, provinsi.`nama_provinsi`
         FROM detail_sekolah, user, provinsi
         WHERE detail_sekolah.`id_user_calon_mhs` = user.`id`
         AND provinsi.`id` = detail_sekolah.`id_provinsi`
-        AND user.`nik` = $id";
+        AND user.`id` = $id";
         $data['detail_sekolah'] = $this->db->query($sql1)->row_array();
 
         $data['prodi'] = $this->db->get('prodi')->result_array();
@@ -683,10 +684,10 @@ class Admin extends CI_Controller
         $sql2 = "SELECT DISTINCT(sekolah.status) FROM sekolah";
         $data['status_sekolah'] = $this->db->query($sql2)->result_array();
 
-        $sql3 = "SELECT data_prestasi.`id`, user.id as id_user, user.nik, data_prestasi.`jenis_kegiatan_lomba`, data_prestasi.`tingkat_kejuaraan`, data_prestasi.`prestasi_juara_ke`
+        $sql3 = "SELECT data_prestasi.`id`, user.id as id_user, user.nik, data_prestasi.`jenis_kegiatan_lomba`, data_prestasi.`tingkat_kejuaraan`, data_prestasi.`prestasi_juara_ke`,data_prestasi.`bukti`
         FROM data_prestasi, user
         WHERE data_prestasi.`id_user_calon_mhs` = user.`id`
-        AND user.nik = $id";
+        AND user.id = $id";
         $data['data_prestasi'] = $this->db->query($sql3)->result_array();
 
         $sql4 = "SELECT user.id, user.nik, data_ortu.`nama_ayah`, data_ortu.`pendidikan_terakhir_ayah`, data_ortu.`pekerjaan_ayah`, data_ortu.`penghasilan_ayah`, data_ortu.`nama_ibu`, data_ortu.`pendidikan_terakhir_ibu`, data_ortu.`pekerjaan_ibu`, data_ortu.`penghasilan_ibu`, data_ortu.`alamat_lengkap_ortu`, data_ortu.`id_provinsi_asal_ortu`, data_ortu.`id_kabupaten_ortu`, data_ortu.`kode_pos_ortu`, data_ortu.`telepon_ortu`, data_ortu.`nama_wali`, data_ortu.`pekerjaan_wali`, data_ortu.`alamat_lengkap_wali`, provinsi.`nama_provinsi`, kabupaten.`kabupaten`
@@ -694,7 +695,7 @@ class Admin extends CI_Controller
         WHERE data_ortu.`id_user_calon_mhs` = user.`id`
         AND data_ortu.`id_provinsi_asal_ortu` = provinsi.`id`
         AND data_ortu.`id_kabupaten_ortu` = kabupaten.`id`
-        AND user.`nik` = $id";
+        AND user.`id` = $id";
         $data['data_ortu'] = $this->db->query($sql4)->row_array();
 
         $this->load->view('template/header', $data);
@@ -937,10 +938,11 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Data Sudah Finalisasi';
 
-        $sql = "SELECT user.id AS id_user, user.nik, user.`email`, pendaftar.*, prodi.`nama_prodi`, prodi.`ruangan_praktek`, prodi.`ruangan_wawancara`
-        FROM user, pendaftar, prodi
+        $sql = "SELECT user.id AS id_user, user.nik, user.`email`, pendaftar.*, prodi.`nama_prodi`, prodi2.nama_prodi as prodi2, prodi.`ruangan_praktek`, prodi.`ruangan_wawancara`
+        FROM user, pendaftar, prodi, prodi as prodi2
         WHERE user.`id` = pendaftar.`id_user_calon_mhs` 
         AND pendaftar.`id_prodi` = prodi.`id`
+        AND pendaftar.id_prodi2 = prodi2.id
         AND pendaftar.`status_finalisasi` = 1";
 
         $data['pendaftar'] = $this->db->query($sql)->result_array();
@@ -1747,10 +1749,13 @@ class Admin extends CI_Controller
           </div>');
         redirect("admin/pengajuan_beasiswa");
     }
-    public function kelulusan($id_user, $id)
+    public function kelulusan()
     {
+        $lulus_di = $this->input->post('lulus_di');
+        $id_user = $this->input->post('id_user');
+        $id = $this->input->post('id_pendaftar');
         $sql = "UPDATE pendaftar, user
-        SET pendaftar.id_pengumuman = 1
+        SET pendaftar.id_pengumuman = 1, pendaftar.lulus_di = '$lulus_di'
         WHERE pendaftar.id_user_calon_mhs = user.id
         AND user.id = $id_user
         AND pendaftar.id = $id";
@@ -1776,7 +1781,7 @@ class Admin extends CI_Controller
     public function batalkan_kelulusan($id_user, $id)
     {
         $sql = "UPDATE pendaftar, user
-        SET pendaftar.id_pengumuman = NULL
+        SET pendaftar.id_pengumuman = NULL, pendaftar.lulus_di = NULL
         WHERE pendaftar.id_user_calon_mhs = user.id
         AND user.id = $id_user
         AND pendaftar.id = $id";
@@ -2014,6 +2019,18 @@ class Admin extends CI_Controller
         $this->load->view('admin/pembayaran_online', $data);
         $this->load->view('template/footer');
     }
+    public function cetak_bukti_pembayaran()
+    {
+        $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
+        $data['title'] = 'Pembayaran Online';
+
+        $data['pembayaran'] = $this->db->query("SELECT pembayaran_online.id,user.id as user_id, user.nik, user.nama_lengkap, pembayaran_online.no_pembayaran, pembayaran_online.bukti_bayar, pembayaran_online.status_pembayaran, pembayaran_online.total_pembayaran, th_ajaran.tahun_ajaran, pembayaran_online.jalur_pendaftaran
+                                                    FROM user, pembayaran_online, th_ajaran
+                                                    WHERE user.id = pembayaran_online.id_user
+                                                    AND th_ajaran.id = user.id_th_ajaran
+                                                    AND user.id = pembayaran_online.id_user")->row_array();
+        $this->load->view('admin/cetak_bukti_pembayaran', $data);
+    }
     public function konfirmasi_pembayaran_online($id)
     {
         $this->db->query("UPDATE pembayaran_online
@@ -2151,10 +2168,56 @@ class Admin extends CI_Controller
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
         $data['title'] = 'Pengumuman Manual';
 
+        $sql = "SELECT pengumuman_manual.id, jadwal.id as id_jadwal, jadwal.gelombang, pengumuman_manual.file_pengumuman 
+        FROM pengumuman_manual, jadwal WHERE pengumuman_manual.id_jadwal = jadwal.id";
+        $data['pengumuman'] = $this->db->query($sql)->result_array();
+
+        $data['gelombang'] = $this->db->get('jadwal')->result_array();
+
         $this->load->view('template/header', $data);
         $this->load->view('template/sidebar', $data);
         $this->load->view('template/topbar', $data);
         $this->load->view('admin/pengumuman_manual', $data);
         $this->load->view('template/footer');
+    }
+    public function tambah_penguman_manual()
+    {
+        $gelombang = $this->input->post('gelombang');
+        $file_pengumuman = $_FILES['file_pengumuman'];
+
+        if ($file_pengumuman = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/pengumuman';
+            $config['allowed_types'] = 'pdf';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('file_pengumuman')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $file_pengumuman = $this->upload->data('file_name');
+            }
+        }
+
+        $data = [
+            'id_jadwal' => $gelombang,
+            'file_pengumuman' => $file_pengumuman,
+        ];
+
+        $this->db->insert('pengumuman_manual', $data);
+        $this->session->set_flashdata('message', '<div class="alert alert-success text-start" role="alert">
+        Data berhasil ditambahkan !
+        </div>');
+        redirect($_SERVER['HTTP_REFERER']);
+    }
+    public function hapus_pengumuman_manual($id)
+    {
+        $this->db->query("DELETE FROM pengumuman_manual WHERE pengumuman_manual.id = $id");
+        $this->session->set_flashdata('message', '<div class="alert alert-success text-start" role="alert">
+        Pengumuman berhasil dihapus !
+        </div>');
+        redirect($_SERVER['HTTP_REFERER']);
     }
 }

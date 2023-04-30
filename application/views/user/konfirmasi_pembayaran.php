@@ -8,14 +8,21 @@
                 <h4 class="alert-heading">Selamat Datang</h4>
                 <p>Silahkan melakukan pembayaran terlebih dahulu</p>
                 <hr>
-                <p class="mb-0">Pembayaran dapat dilakukan dengan melakukan pembayaran ke nomor virtual account <b><?= $user['no_va'] ?></b> dengan biaya Rp. 200.000,00</p>
+                <p class="mb-0">Pembayaran dapat dilakukan dengan melakukan pembayaran ke nomor virtual account
+                    <b><?= $user['no_va'] ?></b> dengan biaya Rp. 200.000,00. Untuk panduan pembayaran silahkan
+                    download pada link berikut <span class="badge bg-primary"><b><a
+                                href="https://drive.google.com/file/d/1l54nPVvhv39jiSO-_e2opYAXvds6_Xog/view?usp=sharing">KLIK
+                                DISINI</a></b></span>
+                </p>
+                <p>Setelah melakukan pembayaran silahkan upload bukti pembayaran pada isian dibawah ini :</p>
             </div>
             <div class="col-lg card shadow p-3">
                 <?= $this->session->flashdata('message');  ?>
                 <form action="<?= base_url('user/aksi_bayar') ?>" method="POST" enctype="multipart/form-data">
                     <div class="mb-3">
                         <label for="no_va">No Virtual Account</label>
-                        <input type="text" id="no_slip" class="form-control" value="<?= $user['no_va']; ?>" name="no_va" readonly required>
+                        <input type="text" id="no_slip" class="form-control" value="<?= $user['no_va']; ?>" name="no_va"
+                            readonly required>
                     </div>
 
                     <div class="mb-3">
