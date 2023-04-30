@@ -89,9 +89,14 @@
                                     <td style="font-size: 9pt; border: 0px;"><?= $kartu_test['tempat_lahir'] . ', ' . date('d-m-Y', strtotime($kartu_test['tanggal_lahir'])); ?></td>
                                 </tr>
                                 <tr>
-                                    <td style="font-size: 9pt; border: 0px;"><b>Prodi Pilihan</b></td>
+                                    <td style="font-size: 9pt; border: 0px;"><b>Prodi Pilihan 1</b></td>
                                     <td style="font-size: 9pt; border: 0px;">:</td>
                                     <td style="font-size: 9pt; border: 0px;"><?= $kartu_test['nama_prodi']; ?></td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size: 9pt; border: 0px;"><b>Prodi Pilihan 2</b></td>
+                                    <td style="font-size: 9pt; border: 0px;">:</td>
+                                    <td style="font-size: 9pt; border: 0px;"><?= $kartu_test['nama_prodi2']; ?></td>
                                 </tr>
 
                             </table>
@@ -106,7 +111,73 @@
                 <td>
                     <div style="text-align: left;" class="ml-4">
                         <div class="">
-                            <h7><strong>JADWAL TEST </strong> </h7>
+                            <h7><strong>JADWAL TEST TULIS</strong> </h7>
+                            <div style="line-height: normal;">
+                                <div style="line-height: 25px;">
+                                    <table style="margin-left: 20px;">
+                                        <tr>
+                                        <td style="font-size: 9pt; border: 0px;"><b>Hari</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">:</td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['test_tulis'])); ?></td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['test_tulis'])); ?></td>
+                                            <?php endif; ?>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 9pt; border: 0px;"><b>Tanggal</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">:</td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['test_tulis'])); ?></td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['test_tulis'])); ?></td>
+                                            <?php endif; ?>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 9pt; border: 0px;"><b>Jam</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">: </td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['test_tulis'])); ?> s/d Selesai</td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['test_tulis'])); ?> s/d Selesai</td>
+                                            <?php endif; ?>
+                                        </tr>
+                                    </table>
+                                </div>
+                            <h7><strong>JADWAL TEST PRAKTEK & WAWANCARA PILIHAN 1</strong> </h7>
+                            <div style="line-height: normal;">
+                                <div style="line-height: 25px;">
+                                    <table style="margin-left: 20px;">
+                                        <tr>
+                                        <td style="font-size: 9pt; border: 0px;"><b>Hari</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">:</td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['tgl_test'])); ?></td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['tgl_test'])); ?></td>
+                                            <?php endif; ?>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 9pt; border: 0px;"><b>Tanggal</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">:</td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['tgl_test'])); ?></td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['tgl_test'])); ?></td>
+                                            <?php endif; ?>
+                                        </tr>
+                                        <tr>
+                                            <td style="font-size: 9pt; border: 0px;"><b>Jam</b></td>
+                                            <td style="font-size: 9pt; border: 0px;">: </td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['tgl_test'])); ?> s/d Selesai</td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['tgl_test'])); ?> s/d Selesai</td>
+                                            <?php endif; ?>
+                                        </tr>
+                                    </table>
+                                </div>
+                            <h7><strong>JADWAL TEST PRAKTEK & WAWANCARA PILIHAN 2</strong> </h7>
                             <div style="line-height: normal;">
                                 <div style="line-height: 25px;">
                                     <table style="margin-left: 20px;">
@@ -114,24 +185,28 @@
                                             <td style="font-size: 9pt; border: 0px;"><b>Hari</b></td>
                                             <td style="font-size: 9pt; border: 0px;">:</td>
                                             <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
-                                                <td style="font-size: 9pt; border: 0px;">Selasa</td>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['tgl_test2'])); ?></td>
                                             <?php else : ?>
-                                                <td style="font-size: 9pt; border: 0px;">Senin</td>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('l', strtotime($kartu_test['tgl_test2'])); ?></td>
                                             <?php endif; ?>
                                         </tr>
                                         <tr>
                                             <td style="font-size: 9pt; border: 0px;"><b>Tanggal</b></td>
                                             <td style="font-size: 9pt; border: 0px;">:</td>
                                             <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
-                                                <td style="font-size: 9pt; border: 0px;">14 Juni 2022</td>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['tgl_test2'])); ?></td>
                                             <?php else : ?>
-                                                <td style="font-size: 9pt; border: 0px;">18 Juli 2022</td>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('d F Y', strtotime($kartu_test['tgl_test2'])); ?></td>
                                             <?php endif; ?>
                                         </tr>
                                         <tr>
                                             <td style="font-size: 9pt; border: 0px;"><b>Jam</b></td>
                                             <td style="font-size: 9pt; border: 0px;">: </td>
-                                            <td style="font-size: 9pt; border: 0px;">08:00 s/d selesai</td>
+                                            <?php if ($kartu_test['gelombang'] == 'Gelombang 1') : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['tgl_test2'])); ?> s/d Selesai</td>
+                                            <?php else : ?>
+                                                <td style="font-size: 9pt; border: 0px;"><?= date('H:i', strtotime($kartu_test['tgl_test2'])); ?> s/d Selesai</td>
+                                            <?php endif; ?>
                                         </tr>
                                     </table>
                                 </div>
