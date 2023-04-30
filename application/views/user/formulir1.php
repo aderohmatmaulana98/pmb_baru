@@ -230,6 +230,31 @@
                                     <small>Upload file dengan format PNG/JPG background merah dengan ukuran max 1
                                         MB</small>
                                 </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload KTP <span class="text-danger"
+                                            style="font-size: 20px;">*</span></label>
+                                    <input class="form-control" type="file" id="ktp" name="ktp" required>
+                                    <small>Upload file dengan format PDF
+                                    </small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload Ijazah / SKL / SKHUN <span class="text-danger"
+                                            style="font-size: 20px;">*</span></label>
+                                    <input class="form-control" type="file" id="ijazah" name="ijazah" required>
+                                    <small>Upload file dengan format PDF</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload Akta Lahir <span class="text-danger"
+                                            style="font-size: 20px;">*</span></label>
+                                    <input class="form-control" type="file" id="akte_lahir" name="akte_lahir" required>
+                                    <small>Upload file dengan format PDF</small>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formFile" class="form-label">Upload Rapot Semester 3 sampai 5<span class="text-danger"
+                                            style="font-size: 20px;">*</span></label>
+                                    <input class="form-control" type="file" id="rapot" name="rapot" required>
+                                    <small>Upload rapot dari semester 3 s/d 5 digabung dalam satu file dengan format PDF </small>
+                                </div>
                                 <button type="submit"
                                     onclick="javascript: return confirm('Dengan ini data yang saya isikan adalah benar. ')"
                                     class="btn btn-primary">Submit</button>

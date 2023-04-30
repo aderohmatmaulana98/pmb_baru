@@ -284,7 +284,8 @@ class User extends CI_Controller
     public function aksi_tambah_formulir()
     {
         $data['user'] = $this->db->get_where('user', ['email' => $this->session->userdata('email')])->row_array();
-
+        $va = $data['user']['no_va'];
+        $urutan = $va;
         $nama_lengkap = $this->input->post('nama_lengkap');
         $jalur_seleksi = $this->input->post('jalur_seleksi');
         $prodi = $this->input->post('prodi');
@@ -304,7 +305,7 @@ class User extends CI_Controller
         $kecamatan = $this->input->post('kecamatan');
         $kodepos = $this->input->post('kode_pos');
         $kewarganegaraan = $this->input->post('kewarganegaraan');
-        $no_daftar = "PMB-" . rand(0, 1000);
+        $no_daftar = "PMB-" . $urutan;
         $pas_foto = $_FILES['pas_foto'];
 
         if ($pas_foto = '') {
@@ -320,6 +321,78 @@ class User extends CI_Controller
                 die();
             } else {
                 $pas_foto = $this->upload->data('file_name');
+            }
+        }
+
+        $ktp = $_FILES['ktp'];
+
+        if ($ktp = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/ktp';
+            $config['allowed_types'] = 'pdf';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('ktp')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $ktp = $this->upload->data('file_name');
+            }
+        }
+
+        $ijazah = $_FILES['ijazah'];
+
+        if ($ijazah = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/ijazah';
+            $config['allowed_types'] = 'pdf';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('ijazah')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $ijazah = $this->upload->data('file_name');
+            }
+        }
+
+        $akte_lahir = $_FILES['akte_lahir'];
+
+        if ($akte_lahir = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/akte';
+            $config['allowed_types'] = 'pdf';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('akte_lahir')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $akte_lahir = $this->upload->data('file_name');
+            }
+        }
+
+        $rapot = $_FILES['rapot'];
+
+        if ($rapot = '') {
+            # code...
+        } else {
+            $config['upload_path'] = './assets/img/rapot';
+            $config['allowed_types'] = 'pdf';
+
+            $this->load->library('upload', $config);
+            $this->upload->initialize($config);
+            if (!$this->upload->do_upload('rapot')) {
+                echo "Upload Gagal";
+                die();
+            } else {
+                $rapot = $this->upload->data('file_name');
             }
         }
         $id_user_calon_mhs = $data['user']['id'];
@@ -359,6 +432,10 @@ class User extends CI_Controller
             'date_created' => date("Y-m-d"),
             'id_user_calon_mhs' => $id_user_calon_mhs,
             'pas_foto' => $pas_foto,
+            'ktp' => $ktp,
+            'ijazah' => $ijazah,
+            'akte_lahir' => $akte_lahir,
+            'rapot' => $rapot,
             'status_finalisasi' => 0,
             'status_validasi_berkas' => 0
         ];

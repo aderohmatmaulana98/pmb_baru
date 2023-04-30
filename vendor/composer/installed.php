@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '297860bf5f2a2db5401b3c82b185c93955bcdad0',
+    'reference' => '7466d64d369ef04efb1dc8ada84f0ae2314c5f5a',
     'name' => 'codeigniter/framework',
   ),
   'versions' => 
@@ -18,7 +18,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '297860bf5f2a2db5401b3c82b185c93955bcdad0',
+      'reference' => '7466d64d369ef04efb1dc8ada84f0ae2314c5f5a',
     ),
     'doctrine/instantiator' => 
     array (
